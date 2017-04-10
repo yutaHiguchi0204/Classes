@@ -321,6 +321,7 @@ bool PlayScene::onTouchBegan(Touch* touch, Event* unused_event)
 	{
 		//挟む
 		put = true;
+		int put_se = AudioEngine::play2d("apple1.ogg");
 	}
 	//プレイヤーじゃないところをタッチしていたら
 	else
