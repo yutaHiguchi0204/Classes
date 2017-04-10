@@ -86,7 +86,7 @@ bool ClearScene::onTouchBegan(cocos2d::Touch * touch, cocos2d::Event * pEvent)
 	Scene* nextScene = TitleScene::createScene();
 	// ŽŸ‚ÌƒV[ƒ“‚ÉˆÚs
 	//BGMŽ~‚ß‚é
-	AudioEngine::stop(clear_bgm);
+	AudioEngine::uncache("clear.ogg");
 
 	_director->replaceScene(nextScene);
 

@@ -405,8 +405,10 @@ void PlayScene::GameoverTransScene()
 	Scene* nextScene = GameoverScene::create();
 
 	//BGM止める
-	AudioEngine::stop(back_graund);
-	AudioEngine::stop(heart);
+	//AudioEngine::stop(back_graund);
+	//AudioEngine::stop(heart);
+	AudioEngine::uncache("puzzle.ogg");
+	AudioEngine::uncache("heart1.ogg");
 
 	// 次のシーンに移行
 	_director->replaceScene(nextScene);
@@ -423,8 +425,10 @@ void PlayScene::ClearTransScene()
 	Scene* nextScene = ClearScene::create();
 
 	//BGM止める
-	AudioEngine::stop(back_graund);
-	AudioEngine::stop(heart);
+	//AudioEngine::stop(back_graund);
+	//AudioEngine::stop(heart);
+	AudioEngine::uncache("puzzle.ogg");
+	AudioEngine::uncache("heart1.ogg");
 
 	// 次のシーンに移行
 	_director->replaceScene(nextScene);

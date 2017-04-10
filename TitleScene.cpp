@@ -98,7 +98,7 @@ bool TitleScene::onTouchBegan(Touch* touch, Event* unused_event)
 	Scene* nextScene = PlayScene::create();
 
 	//BGM止める
-	AudioEngine::stop(title_bgm);
+	AudioEngine::uncache("title.ogg");
 	//ボタン音流す
 	int buttun = AudioEngine::play2d("touch.ogg");
 	// 次のシーンに移行

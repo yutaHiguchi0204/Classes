@@ -121,7 +121,7 @@ bool GameoverScene::onTouchBegan(cocos2d::Touch * touch, cocos2d::Event * pEvent
 	Scene* nextScene = TitleScene::createScene();
 	// ŽŸ‚ÌƒV[ƒ“‚ÉˆÚs
 	//BGMŽ~‚ß‚é
-	AudioEngine::stop(over_bgm);
+	AudioEngine::uncache("over.ogg");
 	_director->replaceScene(nextScene);
 
 
