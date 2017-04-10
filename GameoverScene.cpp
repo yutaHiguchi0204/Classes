@@ -4,9 +4,11 @@
 
 //ヘッダーファイルのインクルード
 #include "GameoverScene.h"
+#include "audio\include\AudioEngine.h"
 
 // 名前空間
 USING_NS_CC;
+using namespace cocos2d::experimental;
 
 //シーン管理
 Scene* GameoverScene::createScene()
@@ -49,6 +51,10 @@ bool GameoverScene::init()
 	m_time = 0;
 	m_actCnt = 0;
 	m_actSter = true;
+
+	//BGM再生
+	int over_bgm = AudioEngine::play2d("over.ogg");
+
 
 	return true;
 }
