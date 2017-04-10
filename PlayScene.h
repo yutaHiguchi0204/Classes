@@ -71,6 +71,25 @@ public:
 	// タッチ関係の関数宣言
 	bool onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* unused_event);
 
+	bool isCollision(cocos2d::Vec2 playerVec, cocos2d::Vec2 foodVec)
+	{
+		if ((playerVec.x < foodVec.x + 32) &&
+			(playerVec.x + 96 > foodVec.x))
+		{
+			if ((playerVec.y < foodVec.y + 32) &&
+				(playerVec.y + 96 > foodVec.y))
+			{
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	// シーン移動
+	void GameoverTransScene();				// ゲームオーバーシーンに移動
+	void ClearTransScene();					// クリアシーンに移動
+
 	// 静的メンバ
 	static int m_time;						// 時間
 	static bool put;
