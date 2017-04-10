@@ -15,9 +15,6 @@ USING_NS_CC;
 
 using namespace cocostudio::timeline;
 
-
-
-
 bool Player::init()
 {
 	if (!Sprite::init())
