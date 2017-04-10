@@ -222,8 +222,6 @@ bool PlayScene::init()
 	food = Food::create();
 	this->addChild(food);
 
-	m_pGage->SetGage(1);
-
 	// プレイヤー
 	m_pPlayer = Player::create();
 	this->addChild(m_pPlayer);
@@ -373,6 +371,7 @@ bool PlayScene::onTouchBegan(Touch* touch, Event* unused_event)
 	{
 		//挟む
 		put = true;
+		int put_se = AudioEngine::play2d("apple1.ogg");
 	}
 	//プレイヤーじゃないところをタッチしていたら
 	else
