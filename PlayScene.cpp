@@ -226,6 +226,7 @@ bool PlayScene::init()
 
 	//食料
 	food = Food::create();
+	food->setPositionX(-64.0f);
 	this->addChild(food);
 
 	// プレイヤー
@@ -259,15 +260,18 @@ bool PlayScene::init()
 ===================================================================== */
 void PlayScene::update(float delta)
 {
-	// 時間計測
-	m_time++;
-
 	// カウントダウン
 	TimeLimit::timeCountDown(&m_time, &m_countDown);
 
 	// 時間の画像編集
-	TimeLimit::timeDraw(m_pTimeOneFloor, m_countDown);
-	TimeLimit::timeDraw(m_pTimeTenFloor, m_countDown);
+	TimeLimit::timeDraw(m_pTimeOneFloor, m_countDown % 10);
+	TimeLimit::timeDraw(m_pTimeTenFloor, m_countDown / 10);
+
+	// 食事時間が終わったらクリア
+	if (m_countDown <= 0)
+	{
+		ClearTransScene();
+	}
 
 	// 満腹ゲージ
 	m_pGage->SetGage(m_pHuman->GetFullPoint());
@@ -399,6 +403,24 @@ void PlayScene::GameoverTransScene()
 {
 	// 次のシーンを作成する
 	Scene* nextScene = GameoverScene::create();
+
+	//BGM止める
+	AudioEngine::stop(back_graund);
+	AudioEngine::stop(heart);
+
+	// 次のシーンに移行
+	_director->replaceScene(nextScene);
+}
+
+/* =====================================================================
+//! 内　容		クリアシーンに移動
+//! 引　数		なし
+//! 戻り値		なし
+===================================================================== */
+void PlayScene::ClearTransScene()
+{
+	// 次のシーンを作成する
+	Scene* nextScene = ClearScene::create();
 
 	//BGM止める
 	AudioEngine::stop(back_graund);

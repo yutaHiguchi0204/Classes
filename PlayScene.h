@@ -76,11 +76,11 @@ public:
 
 	bool isCollision(cocos2d::Vec2 playerVec, cocos2d::Vec2 foodVec)
 	{
-		if ((playerVec.x < foodVec.x + 32) &&
-			(playerVec.x + 96 > foodVec.x))
+		if ((playerVec.x <= foodVec.x + 32) &&
+			(playerVec.x + 96 >= foodVec.x))
 		{
-			if ((playerVec.y < foodVec.y + 32) &&
-				(playerVec.y + 96 > foodVec.y))
+			if ((playerVec.y <= foodVec.y + 32) &&
+				(playerVec.y + 96 >= foodVec.y))
 			{
 				return true;
 			}
