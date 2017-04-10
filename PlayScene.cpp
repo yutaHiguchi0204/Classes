@@ -9,6 +9,7 @@
 #include "Clear.h"
 #include "Food.h"
 #include "GameoverScene.h"
+#include "TimeLimit.h"
 #include "audio\include\AudioEngine.h"
 
 //何ピクセルで1メートルか
@@ -186,6 +187,17 @@ bool PlayScene::init()
 
 	// メンバ変数の初期化
 	m_time = 0;
+	m_countDown = NUM_TIME;
+
+	// 時間
+	m_pTimeOneFloor = Sprite::create("number.png");
+	m_pTimeTenFloor = Sprite::create("number.png");
+	TimeLimit::timeDraw(m_pTimeOneFloor, m_countDown % 10);
+	TimeLimit::timeDraw(m_pTimeTenFloor, m_countDown / 10);
+	m_pTimeOneFloor->setPosition(224.0f, WINDOW_HEIGHT - 96.0f);
+	m_pTimeTenFloor->setPosition(96.0f, WINDOW_HEIGHT - 96.0f);
+	this->addChild(m_pTimeOneFloor, 1);
+	this->addChild(m_pTimeTenFloor, 1);
 
 	// 背景
 	m_pBack = Sprite::create("back.png");
@@ -249,6 +261,13 @@ void PlayScene::update(float delta)
 {
 	// 時間計測
 	m_time++;
+
+	// カウントダウン
+	TimeLimit::timeCountDown(&m_time, &m_countDown);
+
+	// 時間の画像編集
+	TimeLimit::timeDraw(m_pTimeOneFloor, m_countDown);
+	TimeLimit::timeDraw(m_pTimeTenFloor, m_countDown);
 
 	// 満腹ゲージ
 	m_pGage->SetGage(m_pHuman->GetFullPoint());

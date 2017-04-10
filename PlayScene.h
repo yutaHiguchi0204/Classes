@@ -19,8 +19,8 @@
 // 定数
 const int WINDOW_WIDTH = 960;						// 画面の幅
 const int WINDOW_HEIGHT = 640;						// 画面の高さ
-const int NUM_SECOND = 60;							// １秒
-const int INTERVAL_FOOD = NUM_SECOND * 2;			// 食材が落ちてくる間隔
+const int NUM_TIME = 60;							// １回のゲーム時間
+const int INTERVAL_FOOD = 60 * 2;					// 食材が落ちてくる間隔
 
 // クラスの定義
 class PlayScene : public cocos2d::Scene
@@ -29,6 +29,9 @@ private:
 	cocos2d::Sprite* m_pBack;			// 背景
 	cocos2d::Sprite* m_pStomach;		// 胃
 
+	cocos2d::Sprite* m_pTimeOneFloor;	// 一の位
+	cocos2d::Sprite* m_pTimeTenFloor;	// 十の位
+	int m_countDown;					// カウントダウン
 
 	Gage* m_pGage;						//ゲージ
 	Food* food;							//食料
