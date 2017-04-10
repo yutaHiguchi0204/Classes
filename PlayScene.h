@@ -33,17 +33,14 @@ private:
 	Gage* m_pGage;						//ゲージ
 	Food* food;							//食料
 	Human* m_pHuman;					// 人間
-	Player* m_player;					// プレイヤー
+	Player* m_pPlayer;					// プレイヤー
 
 	b2World* m_pWorld;				//物理ワールド
 	b2Body* m_pBody;
 	GLESDebugDraw* m_pDraw;			//表示用インスタンス
 
-	int m_timer;					//タイマー
 	float a;						//ダミー引数
 
-	int cnt;
-	bool put;
 
 public:
 	CREATE_FUNC(PlayScene);
@@ -73,5 +70,11 @@ public:
 	bool onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* unused_event);
 
 	// 静的メンバ
+<<<<<<< HEAD
 	static int m_time;
+=======
+	static int m_time;						// 時間	
+	static bool put;						//挟んでいるかどうか
+
+>>>>>>> 590137c5162a9f7bb64353cfacf860d30564f38e
 };
