@@ -174,9 +174,6 @@ bool PlayScene::init()
 		return false;
 	}
 
-	//タイマーの初期化
-	m_timer = 0;
-
 	//物理システムの初期化
 	initPhysics();
 
@@ -218,8 +215,8 @@ bool PlayScene::init()
 	m_pGage->SetGage(1);
 
 	// プレイヤー
-	m_player = Player::create();
-	this->addChild(m_player);
+	m_pPlayer = Player::create();
+	this->addChild(m_pPlayer);
 
 	//アニメーション用カウント初期化
 	cnt = 0;
@@ -246,10 +243,7 @@ bool PlayScene::init()
 void PlayScene::update(float delta)
 {
 	//// 時間計測
-	//m_time++;
-
-	//タイマーを進める
-	m_timer++;
+	m_time++;
 
 	//物理ワールドの更新（時間を進める）
 	m_pWorld->Step(1.0f / 60.0f, 8, 3);
@@ -275,7 +269,7 @@ void PlayScene::update(float delta)
 
 
 	//2秒ごとに食材が出現する
-	if (m_timer % 120 == 0)
+	if (m_time % 120 == 0)
 	{
 		food->texture(a, m_pWorld, m_pBody);
 	}
@@ -286,18 +280,18 @@ void PlayScene::update(float delta)
 		FallFood();
 	}
 
-	m_player->Update();
+	m_pPlayer->Update();
 	//挟んでいたら、アニメーション
 	if (put)
 	{
-		m_player->Put(cnt);
+		m_pPlayer->Put(cnt);
 		cnt++;
 		if (cnt > 270)
 		{
 			cnt = 0;
 			put = false;
 			Rect rect = { 0, 0, 96, 96 };
-			m_player->setTextureRect(rect);
+			m_pPlayer->setTextureRect(rect);
 		}
 
 	}
@@ -318,10 +312,10 @@ bool PlayScene::onTouchBegan(Touch* touch, Event* unused_event)
 {
 	//タッチ座標取得
 	Vec2 touch_pos = touch->getLocation();
-	Rect rect_player = m_player->getBoundingBox();
+	Rect rect_player = m_pPlayer->getBoundingBox();
 
-	//２回判定されないようにするための変数
-	static int move = 0;
+	////２回判定されないようにするための変数
+	//static int move = 0;
 
 	//当たり判定
 	bool hit = rect_player.containsPoint(touch_pos);
@@ -336,21 +330,21 @@ bool PlayScene::onTouchBegan(Touch* touch, Event* unused_event)
 	else
 	{
 		//１回目の判定なら
-		if (move == 0)
+		if (m_pPlayer->getActionByTag(1) == nullptr)
 		{
 			//動かす
-			m_player->Move(touch_pos);
+			m_pPlayer->Move(touch_pos);
 			//回転させる角度を求める
-			float rottation = m_player->Get_degree(m_player->getPosition(), touch_pos);
+			float rottation = m_pPlayer->Get_degree(m_pPlayer->getPosition(), touch_pos);
 			//プレイヤーを回転させる
-			m_player->setRotation(rottation);
-			move++;
+			m_pPlayer->setRotation(rottation);
+			/*move++;*/
 		}
 		//２重に重なってしまっていたら
-		else
+		/*else
 		{
 			move = 0;
-		}
+		}*/
 	}
 
 	return true;
