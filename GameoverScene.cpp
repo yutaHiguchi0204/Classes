@@ -75,9 +75,9 @@ void GameoverScene::update(float delta)
 	m_actCnt++;
 
 	//アニメーションの処理
-	if (m_actCnt > 20)
+	if (m_actCnt > 5)
 	{
-		MoveBy* act1 = MoveBy::create(1.0f, Vec2(-100.0f, -150.f));
+		MoveBy* act1 = MoveBy::create(1.0f, Vec2(-80.0f, -130.f));
 		RemoveSelf* act2 = RemoveSelf::create(true);
 		Sequence* ACT = Sequence::create(act1, act2, nullptr);
 		m_star = Sprite::create("star.png");
