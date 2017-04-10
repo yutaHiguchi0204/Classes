@@ -7,6 +7,7 @@
 // ヘッダファイルのインクルード
 #include "PlayScene.h"
 #include "Food.h"
+#include "audio\include\AudioEngine.h"
 
 //何ピクセルで1メートルか
 #define PTM_RATIO 32
@@ -15,6 +16,7 @@
 
 // 名前空間
 USING_NS_CC;
+using namespace cocos2d::experimental;
 
 int PlayScene::m_time;
 
@@ -173,6 +175,7 @@ bool PlayScene::init()
 	{
 		return false;
 	}
+	
 
 	//タイマーの初期化
 	m_timer = 0;
@@ -234,6 +237,11 @@ bool PlayScene::init()
 
 	// イベントリスナー登録
 	this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
+
+	int back_graund = AudioEngine::play2d("puzzle.ogg");
+	//int heart = AudioEngine::play2d("heart1.ogg");
+	AudioEngine::setLoop(back_graund, true);
+	//AudioEngine::setLoop(heart, true);
 
 	return true;
 }
