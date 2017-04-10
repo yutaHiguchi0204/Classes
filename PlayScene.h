@@ -33,13 +33,12 @@ private:
 	Gage* m_pGage;						//ゲージ
 	Food* food;							//食料
 	Human* m_pHuman;					// 人間
-	Player* m_player;					// プレイヤー
+	Player* m_pPlayer;					// プレイヤー
 
 	b2World* m_pWorld;				//物理ワールド
 	b2Body* m_pBody;
 	GLESDebugDraw* m_pDraw;			//表示用インスタンス
 
-	int m_timer;					//タイマー
 	float a;						//ダミー引数
 
 	int cnt;

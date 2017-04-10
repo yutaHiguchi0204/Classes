@@ -83,6 +83,7 @@ void Player::Move(Vec2 touch_pos)
 {
 	next_pos = touch_pos;
 	MoveTo* move = MoveTo::create(1.0f, next_pos);
+	move->setTag(1);
 	runAction(move);
 }
 
