@@ -41,8 +41,6 @@ private:
 
 	float a;						//ダミー引数
 
-	int cnt;
-	bool put;
 
 public:
 	CREATE_FUNC(PlayScene);
@@ -72,5 +70,7 @@ public:
 	bool onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* unused_event);
 
 	// 静的メンバ
-	static int m_time;						// 時間
+	static int m_time;						// 時間	
+	static bool put;						//挟んでいるかどうか
+
 };

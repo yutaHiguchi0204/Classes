@@ -16,7 +16,7 @@ public:
 	virtual bool init();
 
 	void Update();		//アップデート
-	void Put(int cnt);			//挟む動作
+	void Put();			//挟む動作
 	void Move(cocos2d::Vec2 touch_pos);		//動く動作
 	float Get_degree(cocos2d::Vec2 pos, cocos2d::Vec2 touch_pos);
 
