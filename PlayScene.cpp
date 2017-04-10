@@ -214,8 +214,6 @@ bool PlayScene::init()
 	food = Food::create();
 	this->addChild(food);
 
-	m_pGage->SetGage(1);
-
 	// ƒvƒŒƒCƒ„[
 	m_pPlayer = Player::create();
 	this->addChild(m_pPlayer);
