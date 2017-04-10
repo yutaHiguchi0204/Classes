@@ -62,7 +62,7 @@ bool GameoverScene::init()
 
 
 	//BGM再生
-	int over_bgm = AudioEngine::play2d("over.ogg");
+	over_bgm = AudioEngine::play2d("over.ogg");
 
 
 	return true;
@@ -120,6 +120,8 @@ bool GameoverScene::onTouchBegan(cocos2d::Touch * touch, cocos2d::Event * pEvent
 	// 次のシーンを作成する
 	Scene* nextScene = TitleScene::createScene();
 	// 次のシーンに移行
+	//BGM止める
+	AudioEngine::stop(over_bgm);
 	_director->replaceScene(nextScene);
 
 

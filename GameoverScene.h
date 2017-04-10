@@ -24,6 +24,8 @@ private:
 	int m_actCnt;
 	//アニメーションの出方の切り替え
 	bool m_actSter;
+	//音楽のid
+	int over_bgm;
 
 public:
 	CREATE_FUNC(GameoverScene);

@@ -16,6 +16,8 @@ private:
 	int m_cnt;
 	//秒数のカウント
 	int m_time;
+	//音楽のid
+	int clear_bgm;
 
 public:
 	CREATE_FUNC(ClearScene);

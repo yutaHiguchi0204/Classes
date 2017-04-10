@@ -40,8 +40,8 @@ bool ClearScene::init()
 	scheduleUpdate();
 
 	// 背景
-	//m_back = Sprite::create("clear.png");
-	m_back = Sprite::create("over.png");
+	m_back = Sprite::create("clear.png");
+	//m_back = Sprite::create("over.png");
 	m_back->setPosition(Vec2(480.0f, 320.0f));
 	this->addChild(m_back);
 
@@ -49,7 +49,7 @@ bool ClearScene::init()
 	m_time = 0;
 
 	//BGM再生
-	int clear_bgm = AudioEngine::play2d("clear.ogg");
+	clear_bgm = AudioEngine::play2d("clear.ogg");
 
 	// タッチイベントリスナーを作成
 	EventListenerTouchOneByOne* listener = EventListenerTouchOneByOne::create();
@@ -86,6 +86,9 @@ bool ClearScene::onTouchBegan(cocos2d::Touch * touch, cocos2d::Event * pEvent)
 	// 次のシーンを作成する
 	Scene* nextScene = TitleScene::createScene();
 	// 次のシーンに移行
+	//BGM止める
+	AudioEngine::stop(clear_bgm);
+
 	_director->replaceScene(nextScene);
 
 	return false;
