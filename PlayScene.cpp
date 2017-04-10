@@ -68,15 +68,15 @@ void PlayScene::initPhysics()
 	b2Vec2 two(80.0f, 32.0f);
 	b2Vec2 three(32.0f, 32.0f);
 	b2Vec2 four(32.0f, 608.0f);
-	b2Vec2 five(752.0f, 608.0f);
-	b2Vec2 six(752.0f, 640.0f);
+	b2Vec2 five(704.0f, 608.0f);
+	b2Vec2 six(704.0f, 640.0f);
 
 	b2Vec2 seven(176.0f, 0.0f);
 	b2Vec2 eight(176.0f, 32.0f);
 	b2Vec2 nine(896.0f, 32.0f);
 	b2Vec2 ten(896.0f, 608.0f);
-	b2Vec2 eleven(848.0f, 608.0f);
-	b2Vec2 twelve(848.0f, 640.0f);
+	b2Vec2 eleven(832.0f, 608.0f);
+	b2Vec2 twelve(832.0f, 640.0f);
 
 	b2Vec2 thirteen(176.0f, 64.0f);
 	b2Vec2 fourteen(208.0f, 64.0f);
@@ -270,9 +270,21 @@ void PlayScene::update(float delta)
 			//物理ワールド中の剛体の角度を取得して、同じ角度にSpriteを回転
 			float rot = m_pBody->GetAngle();
 			sprite->setRotation(-CC_DEGREES_TO_RADIANS(rot));
+
+
+			Rect rectPlayer = m_player->getBoundingBox();
+			Rect rectFood = food->getBoundingBox();
+
+			if (rectPlayer.intersectsRect(rectFood))
+			{
+				if (put)
+				{
+					m_pWorld->DestroyBody(m_pBody);		//剛体の消去
+					sprite->removeFromParent();			//スプライト消去
+				}
+			}
 		}
 	}
-
 
 	//2秒ごとに食材が出現する
 	if (m_timer % 120 == 0)
@@ -287,6 +299,7 @@ void PlayScene::update(float delta)
 	}
 
 	m_player->Update();
+
 	//挟んでいたら、アニメーション
 	if (put)
 	{
@@ -297,7 +310,6 @@ void PlayScene::update(float delta)
 			cnt = 0;
 			put = false;
 		}
-
 	}
 }
 

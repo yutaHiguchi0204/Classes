@@ -73,5 +73,5 @@ public:
 	bool onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* unused_event);
 
 	// Ã“Iƒƒ“ƒo
-	static int m_time;						// ŠÔ
+	static int m_time;
 };
