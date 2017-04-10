@@ -292,10 +292,12 @@ void PlayScene::update(float delta)
 	{
 		m_player->Put(cnt);
 		cnt++;
-		if (cnt > 150)
+		if (cnt > 270)
 		{
 			cnt = 0;
 			put = false;
+			Rect rect = { 0, 0, 96, 96 };
+			m_player->setTextureRect(rect);
 		}
 
 	}

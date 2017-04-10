@@ -25,7 +25,9 @@ bool Player::init()
 		return false;
 	}
 
-	setTexture("player.png");
+	setTexture("player_all.png");
+	Rect rect = { 0, 0, 96, 96 };
+	setTextureRect(rect);
 	setPosition(Vec2(320, 480));
 	put_cnt = 0;
 	pos = getPosition();
@@ -45,27 +47,32 @@ void Player::Update()
 void Player::Put(int cnt)
 {
 	put_cnt = cnt;
+	float grp_x;
+	grp_x = put_cnt / 30;
+	Rect rect = {grp_x * 96, 0, 96, 96};
+	setTextureRect(rect);
 
-	//アニメーション
-	switch (put_cnt / 30)
-	{
-	case 0:
-		setTexture("player.png");
-		break;
-	case 1:
-		setTexture("player2.png");
-		break;
-	case 2:
-		setTexture("player3.png");
-		break;
-	case 3:
-		setTexture("player2.png");
-		break;
-	case 4:
-		setTexture("player.png");
-		break;
 
-	}
+	////アニメーション
+	//switch (put_cnt / 30)
+	//{
+	//case 0:
+	//	setTexture("player.png");
+	//	break;
+	//case 1:
+	//	setTexture("player2.png");
+	//	break;
+	//case 2:
+	//	setTexture("player3.png");
+	//	break;
+	//case 3:
+	//	setTexture("player2.png");
+	//	break;
+	//case 4:
+	//	setTexture("player.png");
+	//	break;
+	//}
+
 
 	return;
 
