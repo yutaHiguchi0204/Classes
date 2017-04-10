@@ -4,9 +4,11 @@
 
 //ヘッダーファイルのインクルード
 #include "Clear.h"
+#include "audio\include\AudioEngine.h"
 
 // 名前空間
 USING_NS_CC;
+using namespace cocos2d::experimental;
 
 //シーン管理
 Scene* ClearScene::createScene()
@@ -42,6 +44,9 @@ bool ClearScene::init()
 
 	m_cnt = 0;
 	m_time = 0;
+
+	//BGM再生
+	int clear_bgm = AudioEngine::play2d("clear.ogg");
 
 	return true;
 }
