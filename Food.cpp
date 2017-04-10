@@ -12,7 +12,9 @@
 #define MAX_HEIGHT 20		//高さ
 #define MAX_WIDTH 30		//幅
 
-#define FOOD_POINT 2
+#define RAND_FLOAT(LO, HI) LO + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/(HI - LO)))
+
+#define FOOD_POINT 2 
 
 USING_NS_CC;
 
@@ -54,26 +56,28 @@ void Food::update()
 //テクスチャの貼り付け
 void Food::texture(float dt, b2World* world, b2Body* Body)
 {
-	//四角形の形状データを作る
-	b2PolygonShape dynamicBox;
-
-	////1m四方の正方形を指定（ここで大きさを変える）
-	dynamicBox.SetAsBox(1.0f, 1.0f);
+	//丸の形状データを作る
+	b2CircleShape dynamicBall;
+	dynamicBall.m_radius = 1.0f;
 
 	//剛体にスプライトを貼る(仮)
 	Sprite* spr = Sprite::create("suika.png");
 	this->addChild(spr);
 
+	//x軸の座標を乱数で取得する
+	float rand_x = RAND_FLOAT(800.0f, 704.0f);
+
 	//ワールドに新たなダイナミックボディを追加する
 	b2BodyDef bodyDef;
 	bodyDef.type = b2_dynamicBody;
-	bodyDef.position.Set(800.0f / PTM_RATIO, 640.0f / PTM_RATIO);
+	bodyDef.position.Set(rand_x / PTM_RATIO, 672.0f / PTM_RATIO);
 	bodyDef.userData = spr;
 	Body = world->CreateBody(&bodyDef);
 
-	//ダイナミックボディに四角形のフィクスチャを追加する
+	//ダイナミックボディに丸のフィクスチャを追加する
 	b2FixtureDef fixtureDef;
-	fixtureDef.shape = &dynamicBox;
-	fixtureDef.restitution;
+	fixtureDef.shape = &dynamicBall;
+	fixtureDef.density = 100.0f;
+	fixtureDef.restitution = 0.6f;
 	Body->CreateFixture(&fixtureDef);
 }

@@ -73,7 +73,11 @@ public:
 	bool onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* unused_event);
 
 	// Ã“Iƒƒ“ƒo
+<<<<<<< HEAD
+	static int m_time;
+=======
 	static int m_time;						// ŠÔ	
 	static bool put;						//‹²‚ñ‚Å‚¢‚é‚©‚Ç‚¤‚©
 
+>>>>>>> 590137c5162a9f7bb64353cfacf860d30564f38e
 };
