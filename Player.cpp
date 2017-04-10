@@ -10,15 +10,20 @@
 #include "PlayScene.h"
 #include "HelloWorldScene.h"
 #include "cocostudio/CocoStudio.h"
+#include "audio\include\AudioEngine.h"
+
 #include "ui/CocosGUI.h"
 
 USING_NS_CC;
 
 using namespace cocostudio::timeline;
+using namespace cocos2d::experimental;
 
+
+//PlaySceneの変数を使用
 bool PlayScene::put;
 
-
+//初期化
 bool Player::init()
 {
 	if (!Sprite::init())
@@ -32,6 +37,8 @@ bool Player::init()
 	setPosition(Vec2(320, 480));
 	put_cnt = 0;
 	pos = getPosition();
+
+	AudioEngine::preload("apple1.ogg");
 
 	return true;
 }
@@ -47,6 +54,8 @@ void Player::Update()
 //cntは0～3、30フレームで1コマ
 void Player::Put()
 {
+	//int put_se = AudioEngine::play2d("apple1.ogg");
+	//AudioEngine::setLoop(put_se, true);
 	put_cnt++;
 
 	float grp_x;
@@ -59,30 +68,9 @@ void Player::Put()
 		PlayScene::put = false;
 		Rect rect = { 0, 0, 96, 96 };
 		setTextureRect(rect);
+		//AudioEngine::stop(put_se);
+		AudioEngine::uncache("apple1.ogg");
 	}
-
-
-	////アニメーション
-	//switch (put_cnt / 30)
-	//{
-	//case 0:
-	//	setTexture("player.png");
-	//	break;
-	//case 1:
-	//	setTexture("player2.png");
-	//	break;
-	//case 2:
-	//	setTexture("player3.png");
-	//	break;
-	//case 3:
-	//	setTexture("player2.png");
-	//	break;
-	//case 4:
-	//	setTexture("player.png");
-	//	break;
-	//}
-
-
 	return;
 
 }

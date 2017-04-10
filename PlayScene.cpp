@@ -291,16 +291,6 @@ void PlayScene::update(float delta)
 	if (put)
 	{
 		m_pPlayer->Put();
-		
-		//cnt++;
-		//if (cnt > 270)
-		//{
-		//	cnt = 0;
-		//	put = false;
-		//	Rect rect = { 0, 0, 96, 96 };
-		//	m_pPlayer->setTextureRect(rect);
-		//}
-
 	}
 }
 
@@ -321,9 +311,6 @@ bool PlayScene::onTouchBegan(Touch* touch, Event* unused_event)
 	Vec2 touch_pos = touch->getLocation();
 	Rect rect_player = m_pPlayer->getBoundingBox();
 
-	////２回判定されないようにするための変数
-	//static int move = 0;
-
 	//当たり判定
 	bool hit = rect_player.containsPoint(touch_pos);
 
@@ -331,7 +318,8 @@ bool PlayScene::onTouchBegan(Touch* touch, Event* unused_event)
 	if (hit)
 	{
 		//挟む
-		put = true;
+		put = true;	
+		int put_se = AudioEngine::play2d("apple1.ogg");
 	}
 	//プレイヤーじゃないところをタッチしていたら
 	else
@@ -345,13 +333,7 @@ bool PlayScene::onTouchBegan(Touch* touch, Event* unused_event)
 			float rottation = m_pPlayer->Get_degree(m_pPlayer->getPosition(), touch_pos);
 			//プレイヤーを回転させる
 			m_pPlayer->setRotation(rottation);
-			/*move++;*/
 		}
-		//２重に重なってしまっていたら
-		/*else
-		{
-			move = 0;
-		}*/
 	}
 
 	return true;
