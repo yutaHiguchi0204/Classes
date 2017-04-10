@@ -41,12 +41,9 @@ private:
 
 	float a;						//ダミー引数
 
-<<<<<<< HEAD
-=======
 	int back_graund;				//BGMのタグ
 	int heart;						//心臓音のタグ
 
->>>>>>> c4bb1e9942da4b6dcd596bc46c08eeaa7f956f5b
 public:
 	CREATE_FUNC(PlayScene);
 
@@ -75,11 +72,6 @@ public:
 	bool onTouchBegan(cocos2d::Touch* touch, cocos2d::Event* unused_event);
 
 	// 静的メンバ
-<<<<<<< HEAD
-	static int m_time;
-
-=======
 	static int m_time;						// 時間
->>>>>>> c4bb1e9942da4b6dcd596bc46c08eeaa7f956f5b
 	static bool put;
 };

@@ -7,6 +7,7 @@
 // ヘッダファイルのインクルード
 #include "PlayScene.h"
 #include "Food.h"
+#include "audio\include\AudioEngine.h"
 
 //何ピクセルで1メートルか
 #define PTM_RATIO 32
@@ -15,10 +16,7 @@
 
 // 名前空間
 USING_NS_CC;
-<<<<<<< HEAD
-=======
 using namespace experimental;
->>>>>>> c4bb1e9942da4b6dcd596bc46c08eeaa7f956f5b
 
 int PlayScene::m_time;
 
@@ -177,12 +175,6 @@ bool PlayScene::init()
 	{
 		return false;
 	}
-<<<<<<< HEAD
-
-	//タイマーの初期化
-	m_time = 0;
-=======
->>>>>>> c4bb1e9942da4b6dcd596bc46c08eeaa7f956f5b
 
 	//物理システムの初期化
 	initPhysics();
@@ -226,9 +218,6 @@ bool PlayScene::init()
 	m_pPlayer = Player::create();
 	this->addChild(m_pPlayer);
 
-	//アニメーション用カウント初期化
-	cnt = 0;
-
 	//挟んでいるか否か（初期値）
 	put = false;
 
@@ -241,14 +230,11 @@ bool PlayScene::init()
 	// イベントリスナー登録
 	this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
 
-<<<<<<< HEAD
-=======
 	back_graund = AudioEngine::play2d("puzzle.ogg");
 	heart = AudioEngine::play2d("heart1.ogg");
 	AudioEngine::setLoop(back_graund, true);
 	AudioEngine::setLoop(heart, true);
 
->>>>>>> c4bb1e9942da4b6dcd596bc46c08eeaa7f956f5b
 	return true;
 }
 
@@ -260,9 +246,6 @@ bool PlayScene::init()
 void PlayScene::update(float delta)
 {
 	//// 時間計測
-	//m_time++;
-
-	//タイマーを進める
 	m_time++;
 
 	//物理ワールドの更新（時間を進める）
@@ -284,22 +267,6 @@ void PlayScene::update(float delta)
 			//物理ワールド中の剛体の角度を取得して、同じ角度にSpriteを回転
 			float rot = m_pBody->GetAngle();
 			sprite->setRotation(-CC_DEGREES_TO_RADIANS(rot));
-<<<<<<< HEAD
-
-
-			Rect rectPlayer = m_pPlayer->getBoundingBox();
-			Rect rectFood = food->getBoundingBox();
-
-			if (rectPlayer.intersectsRect(rectFood))
-			{
-				if (put)
-				{
-					m_pWorld->DestroyBody(m_pBody);		//剛体の消去
-					sprite->removeFromParent();			//スプライト消去
-				}
-			}
-=======
->>>>>>> c4bb1e9942da4b6dcd596bc46c08eeaa7f956f5b
 		}
 	}
 
@@ -317,24 +284,10 @@ void PlayScene::update(float delta)
 	}
 
 	m_pPlayer->Update();
-<<<<<<< HEAD
-
-	//挟んでいたら、アニメーション
-	if (put)
-	{
-		m_pPlayer->Put(cnt);
-		cnt++;
-		if (cnt > 150)
-		{
-			cnt = 0;
-			put = false;
-		}
-=======
 	//挟んでいたら、アニメーション
 	if (put)
 	{
 		m_pPlayer->Put();
->>>>>>> c4bb1e9942da4b6dcd596bc46c08eeaa7f956f5b
 	}
 }
 
@@ -355,13 +308,8 @@ bool PlayScene::onTouchBegan(Touch* touch, Event* unused_event)
 	Vec2 touch_pos = touch->getLocation();
 	Rect rect_player = m_pPlayer->getBoundingBox();
 
-<<<<<<< HEAD
-	//２回判定されないようにするための変数
-	static int move = 0;
-=======
 	////２回判定されないようにするための変数
 	//static int move = 0;
->>>>>>> c4bb1e9942da4b6dcd596bc46c08eeaa7f956f5b
 
 	//当たり判定
 	bool hit = rect_player.containsPoint(touch_pos);
@@ -377,7 +325,7 @@ bool PlayScene::onTouchBegan(Touch* touch, Event* unused_event)
 	else
 	{
 		//１回目の判定なら
-		if (move == 0)
+		if (m_pPlayer->getActionByTag(1) == nullptr)
 		{
 			//動かす
 			m_pPlayer->Move(touch_pos);
@@ -385,16 +333,7 @@ bool PlayScene::onTouchBegan(Touch* touch, Event* unused_event)
 			float rottation = m_pPlayer->Get_degree(m_pPlayer->getPosition(), touch_pos);
 			//プレイヤーを回転させる
 			m_pPlayer->setRotation(rottation);
-<<<<<<< HEAD
-			move++;
-		}
-		//２重に重なってしまっていたら
-		else
-		{
-			move = 0;
-=======
 			/*move++;*/
->>>>>>> c4bb1e9942da4b6dcd596bc46c08eeaa7f956f5b
 		}
 		//２重に重なってしまっていたら
 		/*else
