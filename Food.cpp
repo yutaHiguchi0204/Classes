@@ -62,10 +62,11 @@ void Food::texture(float dt, b2World* world, b2Body* Body)
 
 	//剛体にスプライトを貼る(仮)
 	Sprite* spr = Sprite::create("suika.png");
+	spr->setPosition(Vec2(-32.0f, -32.0f));
 	this->addChild(spr);
 
 	//x軸の座標を乱数で取得する
-	float rand_x = RAND_FLOAT(832.0f, 704.0f);
+	float rand_x = RAND_FLOAT(800.0f, 736.0f);
 
 	//ワールドに新たなダイナミックボディを追加する
 	b2BodyDef bodyDef;

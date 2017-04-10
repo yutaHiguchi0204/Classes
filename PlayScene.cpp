@@ -226,7 +226,7 @@ bool PlayScene::init()
 
 	//食料
 	food = Food::create();
-	food->setPositionX(-64.0f);
+	//food->setPositionX(-64.0f);
 	this->addChild(food);
 
 	// プレイヤー
