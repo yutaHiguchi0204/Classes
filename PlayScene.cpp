@@ -221,8 +221,6 @@ bool PlayScene::init()
 	m_pPlayer = Player::create();
 	this->addChild(m_pPlayer);
 
-	//アニメーション用カウント初期化
-	cnt = 0;
 	//挟んでいるか否か（初期値）
 	put = false;
 
@@ -236,9 +234,9 @@ bool PlayScene::init()
 	this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
 
 	int back_graund = AudioEngine::play2d("puzzle.ogg");
-	//int heart = AudioEngine::play2d("heart1.ogg");
+	int heart = AudioEngine::play2d("heart1.ogg");
 	AudioEngine::setLoop(back_graund, true);
-	//AudioEngine::setLoop(heart, true);
+	AudioEngine::setLoop(heart, true);
 
 	return true;
 }
@@ -292,15 +290,16 @@ void PlayScene::update(float delta)
 	//挟んでいたら、アニメーション
 	if (put)
 	{
-		m_pPlayer->Put(cnt);
-		cnt++;
-		if (cnt > 270)
-		{
-			cnt = 0;
-			put = false;
-			Rect rect = { 0, 0, 96, 96 };
-			m_pPlayer->setTextureRect(rect);
-		}
+		m_pPlayer->Put();
+		
+		//cnt++;
+		//if (cnt > 270)
+		//{
+		//	cnt = 0;
+		//	put = false;
+		//	Rect rect = { 0, 0, 96, 96 };
+		//	m_pPlayer->setTextureRect(rect);
+		//}
 
 	}
 }

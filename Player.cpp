@@ -7,6 +7,7 @@
 
 #include "Player.h"
 
+#include "PlayScene.h"
 #include "HelloWorldScene.h"
 #include "cocostudio/CocoStudio.h"
 #include "ui/CocosGUI.h"
@@ -15,7 +16,7 @@ USING_NS_CC;
 
 using namespace cocostudio::timeline;
 
-
+bool PlayScene::put;
 
 
 bool Player::init()
@@ -44,13 +45,21 @@ void Player::Update()
 //挟む
 //cntをmainから取得して、アニメーション
 //cntは0～3、30フレームで1コマ
-void Player::Put(int cnt)
+void Player::Put()
 {
-	put_cnt = cnt;
+	put_cnt++;
+
 	float grp_x;
-	grp_x = put_cnt / 30;
+	grp_x = put_cnt / 10;
 	Rect rect = {grp_x * 96, 0, 96, 96};
 	setTextureRect(rect);
+	if (put_cnt > 90)
+	{
+		put_cnt = 0;
+		PlayScene::put = false;
+		Rect rect = { 0, 0, 96, 96 };
+		setTextureRect(rect);
+	}
 
 
 	////アニメーション
