@@ -40,7 +40,8 @@ bool ClearScene::init()
 	scheduleUpdate();
 
 	// ”wŒi
-	m_back = Sprite::create("clear.png");
+	//m_back = Sprite::create("clear.png");
+	m_back = Sprite::create("over.png");
 	m_back->setPosition(Vec2(480.0f, 320.0f));
 	this->addChild(m_back);
 
