@@ -233,8 +233,8 @@ bool PlayScene::init()
 	// イベントリスナー登録
 	this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
 
-	int back_graund = AudioEngine::play2d("puzzle.ogg");
-	int heart = AudioEngine::play2d("heart1.ogg");
+	back_graund = AudioEngine::play2d("puzzle.ogg");
+	heart = AudioEngine::play2d("heart1.ogg");
 	AudioEngine::setLoop(back_graund, true);
 	AudioEngine::setLoop(heart, true);
 

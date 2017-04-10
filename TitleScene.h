@@ -16,6 +16,8 @@ private:
 	cocos2d::Sprite* m_pTitleMsg;			// タップしてねメッセージ
 
 	float moveX;							// 初期角度
+	
+	int title_bgm;							//BGMのタグ
 
 public:
 	CREATE_FUNC(TitleScene);

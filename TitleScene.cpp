@@ -7,9 +7,11 @@
 // ヘッダファイルのインクルード
 #include "TitleScene.h"
 #include "PlayScene.h"
+#include "audio\include\AudioEngine.h"
 
 // 名前空間
 USING_NS_CC;
+using namespace cocos2d::experimental;
 
 // 定数
 const float SPEED_MESSAGE_MOVE = 5.0f;				// メッセージの動く速度
@@ -65,6 +67,10 @@ bool TitleScene::init()
 	// イベントリスナー登録
 	this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
 
+	title_bgm = AudioEngine::play2d("title.ogg");
+	AudioEngine::setLoop(title_bgm, true);
+
+
 	return true;
 }
 
@@ -91,6 +97,10 @@ bool TitleScene::onTouchBegan(Touch* touch, Event* unused_event)
 	// 次のシーンを作成する
 	Scene* nextScene = PlayScene::create();
 
+	//BGM止める
+	AudioEngine::stop(title_bgm);
+	//ボタン音流す
+	int buttun = AudioEngine::play2d("touch.ogg");
 	// 次のシーンに移行
 	_director->replaceScene(nextScene);
 

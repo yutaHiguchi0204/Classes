@@ -41,6 +41,9 @@ private:
 
 	float a;						//ダミー引数
 
+	int back_graund;				//BGMのタグ
+	int heart;						//心臓音のタグ
+
 
 public:
 	CREATE_FUNC(PlayScene);
