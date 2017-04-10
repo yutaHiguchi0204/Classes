@@ -12,9 +12,16 @@
 class Food : public cocos2d::Layer
 {
 private:
+	int m_foodPoint;		// 食材のボリューム
 
 public:
 	CREATE_FUNC(Food);
+
+	// 食材のボリュームを取得
+	inline int GetFoodPoint()
+	{
+		return m_foodPoint;
+	}
 
 	//更新処理
 	void update();

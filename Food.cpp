@@ -12,6 +12,8 @@
 #define MAX_HEIGHT 20		//高さ
 #define MAX_WIDTH 30		//幅
 
+#define FOOD_POINT 2
+
 USING_NS_CC;
 
 using namespace cocostudio::timeline;
@@ -37,6 +39,9 @@ bool Food::init()
 	{
 		return false;
 	}
+
+	m_foodPoint = FOOD_POINT;
+
 	return true;
 }
 
@@ -46,7 +51,7 @@ void Food::update()
 
 }
 
-//更新処理
+//テクスチャの貼り付け
 void Food::texture(float dt, b2World* world, b2Body* Body)
 {
 	//四角形の形状データを作る
