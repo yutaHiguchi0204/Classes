@@ -7,6 +7,7 @@
 // ヘッダファイルのインクルード
 #include "PlayScene.h"
 #include "Food.h"
+#include "audio\include\AudioEngine.h"
 
 //何ピクセルで1メートルか
 #define PTM_RATIO 32
@@ -15,6 +16,7 @@
 
 // 名前空間
 USING_NS_CC;
+using namespace experimental;
 
 int PlayScene::m_time;
 
@@ -218,8 +220,6 @@ bool PlayScene::init()
 	m_pPlayer = Player::create();
 	this->addChild(m_pPlayer);
 
-	//アニメーション用カウント初期化
-	cnt = 0;
 	//挟んでいるか否か（初期値）
 	put = false;
 
@@ -231,6 +231,11 @@ bool PlayScene::init()
 
 	// イベントリスナー登録
 	this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
+
+	back_graund = AudioEngine::play2d("puzzle.ogg");
+	heart = AudioEngine::play2d("heart1.ogg");
+	AudioEngine::setLoop(back_graund, true);
+	AudioEngine::setLoop(heart, true);
 
 	return true;
 }
@@ -285,15 +290,6 @@ void PlayScene::update(float delta)
 	if (put)
 	{
 		m_pPlayer->Put();
-		cnt++;
-		if (cnt > 270)
-		{
-			cnt = 0;
-			put = false;
-			Rect rect = { 0, 0, 96, 96 };
-			m_pPlayer->setTextureRect(rect);
-		}
-
 	}
 }
 

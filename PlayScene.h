@@ -41,8 +41,8 @@ private:
 
 	float a;						//ダミー引数
 
-	int cnt;
-	bool put;
+	int back_graund;				//BGMのタグ
+	int heart;						//心臓音のタグ
 
 public:
 	CREATE_FUNC(PlayScene);
@@ -73,4 +73,5 @@ public:
 
 	// 静的メンバ
 	static int m_time;						// 時間
+	static bool put;
 };
