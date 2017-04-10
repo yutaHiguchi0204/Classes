@@ -6,7 +6,9 @@
 
 // ヘッダファイルのインクルード
 #include "PlayScene.h"
+#include "Clear.h"
 #include "Food.h"
+#include "GameoverScene.h"
 #include "audio\include\AudioEngine.h"
 
 //何ピクセルで1メートルか
@@ -70,15 +72,15 @@ void PlayScene::initPhysics()
 	b2Vec2 two(80.0f, 32.0f);
 	b2Vec2 three(32.0f, 32.0f);
 	b2Vec2 four(32.0f, 608.0f);
-	b2Vec2 five(752.0f, 608.0f);
-	b2Vec2 six(752.0f, 640.0f);
+	b2Vec2 five(704.0f, 608.0f);
+	b2Vec2 six(704.0f, 640.0f);
 
 	b2Vec2 seven(176.0f, 0.0f);
 	b2Vec2 eight(176.0f, 32.0f);
 	b2Vec2 nine(896.0f, 32.0f);
 	b2Vec2 ten(896.0f, 608.0f);
-	b2Vec2 eleven(848.0f, 608.0f);
-	b2Vec2 twelve(848.0f, 640.0f);
+	b2Vec2 eleven(832.0f, 608.0f);
+	b2Vec2 twelve(832.0f, 640.0f);
 
 	b2Vec2 thirteen(176.0f, 64.0f);
 	b2Vec2 fourteen(208.0f, 64.0f);
@@ -245,8 +247,17 @@ bool PlayScene::init()
 ===================================================================== */
 void PlayScene::update(float delta)
 {
-	//// 時間計測
+	// 時間計測
 	m_time++;
+
+	// 満腹ゲージ
+	m_pGage->SetGage(m_pHuman->GetFullPoint());
+
+	// 満腹度が満タンになったらゲームオーバー
+	if (m_pHuman->GetFullPoint() >= MAX_FULLPOINT)
+	{
+		GameoverTransScene();
+	}
 
 	//物理ワールドの更新（時間を進める）
 	m_pWorld->Step(1.0f / 60.0f, 8, 3);
@@ -270,13 +281,6 @@ void PlayScene::update(float delta)
 		}
 	}
 
-
-	//2秒ごとに食材が出現する
-	if (m_time % 120 == 0)
-	{
-		food->texture(a, m_pWorld, m_pBody);
-	}
-
 	// 食材を落とす
 	if (m_time % INTERVAL_FOOD == 0)
 	{
@@ -298,7 +302,10 @@ void PlayScene::update(float delta)
 ===================================================================== */
 void PlayScene::FallFood()
 {
-	
+	food->texture(a, m_pWorld, m_pBody);
+
+	// 満腹ゲージをためる
+	m_pHuman->SetFullPoint(food->GetFoodPoint());
 }
 
 // タッチ開始時に呼ばれる関数
@@ -320,6 +327,25 @@ bool PlayScene::onTouchBegan(Touch* touch, Event* unused_event)
 		//挟む
 		put = true;
 		int put_se = AudioEngine::play2d("apple1.ogg");
+
+		//物理ワールド内の全てのボディについて処理
+		for (m_pBody = m_pWorld->GetBodyList(); m_pBody != nullptr; m_pBody = m_pBody->GetNext())
+		{
+			Sprite* sprite = (Sprite*)m_pBody->GetUserData();
+
+			if (sprite != nullptr)
+			{
+				// 当たり判定
+				if (isCollision(m_pPlayer->getPosition(), sprite->getPosition()))
+				{
+					m_pWorld->DestroyBody(m_pBody);		// 剛体の削除
+					sprite->removeFromParent();			// スプライトの解放
+
+					// 満腹ゲージを減らす
+					m_pHuman->SetFullPoint(-(food->GetFoodPoint()));
+				}
+			}
+		}
 	}
 	//プレイヤーじゃないところをタッチしていたら
 	else
@@ -343,6 +369,24 @@ bool PlayScene::onTouchBegan(Touch* touch, Event* unused_event)
 	}
 
 	return true;
+}
+
+/* =====================================================================
+//! 内　容		ゲームオーバーシーンに移動
+//! 引　数		なし
+//! 戻り値		なし
+===================================================================== */
+void PlayScene::GameoverTransScene()
+{
+	// 次のシーンを作成する
+	Scene* nextScene = GameoverScene::create();
+
+	//BGM止める
+	AudioEngine::stop(back_graund);
+	AudioEngine::stop(heart);
+
+	// 次のシーンに移行
+	_director->replaceScene(nextScene);
 }
 
 //表示関数をオーバーライド
