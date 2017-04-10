@@ -14,7 +14,7 @@
 
 #define RAND_FLOAT(LO, HI) LO + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX/(HI - LO)))
 
-#define FOOD_POINT 2 
+#define FOOD_POINT 3 
 
 USING_NS_CC;
 
