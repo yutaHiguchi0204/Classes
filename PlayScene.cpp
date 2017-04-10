@@ -7,7 +7,6 @@
 // ヘッダファイルのインクルード
 #include "PlayScene.h"
 #include "Food.h"
-#include "audio\include\AudioEngine.h"
 
 //何ピクセルで1メートルか
 #define PTM_RATIO 32
@@ -16,7 +15,6 @@
 
 // 名前空間
 USING_NS_CC;
-using namespace cocos2d::experimental;
 
 int PlayScene::m_time;
 
@@ -70,15 +68,15 @@ void PlayScene::initPhysics()
 	b2Vec2 two(80.0f, 32.0f);
 	b2Vec2 three(32.0f, 32.0f);
 	b2Vec2 four(32.0f, 608.0f);
-	b2Vec2 five(704.0f, 608.0f);
-	b2Vec2 six(704.0f, 640.0f);
+	b2Vec2 five(752.0f, 608.0f);
+	b2Vec2 six(752.0f, 640.0f);
 
 	b2Vec2 seven(176.0f, 0.0f);
 	b2Vec2 eight(176.0f, 32.0f);
 	b2Vec2 nine(896.0f, 32.0f);
 	b2Vec2 ten(896.0f, 608.0f);
-	b2Vec2 eleven(832.0f, 608.0f);
-	b2Vec2 twelve(832.0f, 640.0f);
+	b2Vec2 eleven(848.0f, 608.0f);
+	b2Vec2 twelve(848.0f, 640.0f);
 
 	b2Vec2 thirteen(176.0f, 64.0f);
 	b2Vec2 fourteen(208.0f, 64.0f);
@@ -175,7 +173,6 @@ bool PlayScene::init()
 	{
 		return false;
 	}
-	
 
 	//物理システムの初期化
 	initPhysics();
@@ -221,6 +218,8 @@ bool PlayScene::init()
 	m_pPlayer = Player::create();
 	this->addChild(m_pPlayer);
 
+	//アニメーション用カウント初期化
+	cnt = 0;
 	//挟んでいるか否か（初期値）
 	put = false;
 
@@ -232,11 +231,6 @@ bool PlayScene::init()
 
 	// イベントリスナー登録
 	this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
-
-	int back_graund = AudioEngine::play2d("puzzle.ogg");
-	int heart = AudioEngine::play2d("heart1.ogg");
-	AudioEngine::setLoop(back_graund, true);
-	AudioEngine::setLoop(heart, true);
 
 	return true;
 }
@@ -270,21 +264,9 @@ void PlayScene::update(float delta)
 			//物理ワールド中の剛体の角度を取得して、同じ角度にSpriteを回転
 			float rot = m_pBody->GetAngle();
 			sprite->setRotation(-CC_DEGREES_TO_RADIANS(rot));
-
-
-			Rect rectPlayer = m_player->getBoundingBox();
-			Rect rectFood = food->getBoundingBox();
-
-			if (rectPlayer.intersectsRect(rectFood))
-			{
-				if (put)
-				{
-					m_pWorld->DestroyBody(m_pBody);		//剛体の消去
-					sprite->removeFromParent();			//スプライト消去
-				}
-			}
 		}
 	}
+
 
 	//2秒ごとに食材が出現する
 	if (m_time % 120 == 0)
@@ -298,26 +280,20 @@ void PlayScene::update(float delta)
 		FallFood();
 	}
 
-<<<<<<< HEAD
-	m_player->Update();
-
-	//挟んでいたら、アニメーション
-	if (put)
-	{
-		m_player->Put(cnt);
-		cnt++;
-		if (cnt > 150)
-		{
-			cnt = 0;
-			put = false;
-		}
-=======
 	m_pPlayer->Update();
 	//挟んでいたら、アニメーション
 	if (put)
 	{
 		m_pPlayer->Put();
->>>>>>> 590137c5162a9f7bb64353cfacf860d30564f38e
+		cnt++;
+		if (cnt > 270)
+		{
+			cnt = 0;
+			put = false;
+			Rect rect = { 0, 0, 96, 96 };
+			m_pPlayer->setTextureRect(rect);
+		}
+
 	}
 }
 
@@ -338,6 +314,9 @@ bool PlayScene::onTouchBegan(Touch* touch, Event* unused_event)
 	Vec2 touch_pos = touch->getLocation();
 	Rect rect_player = m_pPlayer->getBoundingBox();
 
+	////２回判定されないようにするための変数
+	//static int move = 0;
+
 	//当たり判定
 	bool hit = rect_player.containsPoint(touch_pos);
 
@@ -345,8 +324,7 @@ bool PlayScene::onTouchBegan(Touch* touch, Event* unused_event)
 	if (hit)
 	{
 		//挟む
-		put = true;	
-		int put_se = AudioEngine::play2d("apple1.ogg");
+		put = true;
 	}
 	//プレイヤーじゃないところをタッチしていたら
 	else
@@ -360,7 +338,13 @@ bool PlayScene::onTouchBegan(Touch* touch, Event* unused_event)
 			float rottation = m_pPlayer->Get_degree(m_pPlayer->getPosition(), touch_pos);
 			//プレイヤーを回転させる
 			m_pPlayer->setRotation(rottation);
+			/*move++;*/
 		}
+		//２重に重なってしまっていたら
+		/*else
+		{
+			move = 0;
+		}*/
 	}
 
 	return true;
