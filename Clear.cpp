@@ -5,9 +5,11 @@
 //ヘッダーファイルのインクルード
 #include "Clear.h"
 #include "audio\include\AudioEngine.h"
+#include "TitleScene.h"
 
 // 名前空間
 USING_NS_CC;
+
 using namespace cocos2d::experimental;
 
 //シーン管理
@@ -48,6 +50,12 @@ bool ClearScene::init()
 	//BGM再生
 	int clear_bgm = AudioEngine::play2d("clear.ogg");
 
+	// タッチイベントリスナーを作成
+	EventListenerTouchOneByOne* listener = EventListenerTouchOneByOne::create();
+	listener->onTouchBegan = CC_CALLBACK_2(ClearScene::onTouchBegan, this);
+	_director->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
+
+
 	return true;
 }
 
@@ -70,4 +78,14 @@ void ClearScene::update(float delta)
 		//次のシーンに移行
 		//_director->replaceScene(nextScene);
 	}
+}
+
+bool ClearScene::onTouchBegan(cocos2d::Touch * touch, cocos2d::Event * pEvent)
+{
+	// 次のシーンを作成する
+	Scene* nextScene = TitleScene::createScene();
+	// 次のシーンに移行
+	_director->replaceScene(nextScene);
+
+	return false;
 }

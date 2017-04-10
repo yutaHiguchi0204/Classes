@@ -34,4 +34,8 @@ public:
 
 	// 更新処理
 	void update(float delta);
+	
+	//タッチ操作
+	bool onTouchBegan(cocos2d::Touch * touch, cocos2d::Event * pEvent);
+
 };

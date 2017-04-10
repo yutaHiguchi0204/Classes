@@ -5,6 +5,8 @@
 //ヘッダーファイルのインクルード
 #include "GameoverScene.h"
 #include "audio\include\AudioEngine.h"
+#include "TitleScene.h"
+
 
 // 名前空間
 USING_NS_CC;
@@ -52,6 +54,13 @@ bool GameoverScene::init()
 	m_actCnt = 0;
 	m_actSter = true;
 
+
+	// タッチイベントリスナーを作成
+	EventListenerTouchOneByOne* listener = EventListenerTouchOneByOne::create();
+	listener->onTouchBegan = CC_CALLBACK_2(GameoverScene::onTouchBegan, this);
+	_director->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
+
+
 	//BGM再生
 	int over_bgm = AudioEngine::play2d("over.ogg");
 
@@ -66,7 +75,7 @@ void GameoverScene::update(float delta)
 	m_actCnt++;
 
 	//アニメーションの処理
-	if (m_actCnt > 30)
+	if (m_actCnt > 20)
 	{
 		MoveBy* act1 = MoveBy::create(1.0f, Vec2(-100.0f, -150.f));
 		RemoveSelf* act2 = RemoveSelf::create(true);
@@ -104,4 +113,15 @@ void GameoverScene::update(float delta)
 		//次のシーンに移行
 		//_director->replaceScene(nextScene);
 	}
+}
+
+bool GameoverScene::onTouchBegan(cocos2d::Touch * touch, cocos2d::Event * pEvent)
+{
+	// 次のシーンを作成する
+	Scene* nextScene = TitleScene::createScene();
+	// 次のシーンに移行
+	_director->replaceScene(nextScene);
+
+
+	return false;
 }
