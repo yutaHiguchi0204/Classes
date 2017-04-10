@@ -29,22 +29,25 @@ bool Player::init()
 	setPosition(Vec2(320, 480));
 	put_cnt = 0;
 	pos = getPosition();
-	//spd = (0, 0);
-
-	scheduleUpdate();
 
 	return true;
 }
 
+//アップデート
+void Player::Update()
+{
+	pos = getPosition();
+}
+
 //挟む
 //cntをmainから取得して、アニメーション
-//cntは０～３
+//cntは0～3、30フレームで1コマ
 void Player::Put(int cnt)
 {
 	put_cnt = cnt;
 
 	//アニメーション
-	switch (put_cnt)
+	switch (put_cnt / 30)
 	{
 	case 0:
 		setTexture("player.png");
@@ -58,6 +61,10 @@ void Player::Put(int cnt)
 	case 3:
 		setTexture("player2.png");
 		break;
+	case 4:
+		setTexture("player.png");
+		break;
+
 	}
 
 	return;
@@ -67,4 +74,21 @@ void Player::Put(int cnt)
 //動く(タッチされた場所に向かって）
 void Player::Move(Vec2 touch_pos)
 {
+	next_pos = touch_pos;
+	MoveTo* move = MoveTo::create(1.0f, next_pos);
+	runAction(move);
+}
+
+//角度を求める
+float Player::Get_degree(cocos2d::Vec2 pos, cocos2d::Vec2 touch_pos)
+{
+	float radian;		
+	//角度をradianで取得
+	radian = ccpToAngle(ccpSub(pos, touch_pos));
+	//degreeに変換
+	float degree = CC_RADIANS_TO_DEGREES(radian);
+	degree *= -1;
+	degree -= 90.0f;
+
+	return degree;
 }
