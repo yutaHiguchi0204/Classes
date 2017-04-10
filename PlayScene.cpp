@@ -15,6 +15,10 @@
 
 // 名前空間
 USING_NS_CC;
+<<<<<<< HEAD
+=======
+using namespace experimental;
+>>>>>>> c4bb1e9942da4b6dcd596bc46c08eeaa7f956f5b
 
 int PlayScene::m_time;
 
@@ -68,15 +72,15 @@ void PlayScene::initPhysics()
 	b2Vec2 two(80.0f, 32.0f);
 	b2Vec2 three(32.0f, 32.0f);
 	b2Vec2 four(32.0f, 608.0f);
-	b2Vec2 five(704.0f, 608.0f);
-	b2Vec2 six(704.0f, 640.0f);
+	b2Vec2 five(752.0f, 608.0f);
+	b2Vec2 six(752.0f, 640.0f);
 
 	b2Vec2 seven(176.0f, 0.0f);
 	b2Vec2 eight(176.0f, 32.0f);
 	b2Vec2 nine(896.0f, 32.0f);
 	b2Vec2 ten(896.0f, 608.0f);
-	b2Vec2 eleven(832.0f, 608.0f);
-	b2Vec2 twelve(832.0f, 640.0f);
+	b2Vec2 eleven(848.0f, 608.0f);
+	b2Vec2 twelve(848.0f, 640.0f);
 
 	b2Vec2 thirteen(176.0f, 64.0f);
 	b2Vec2 fourteen(208.0f, 64.0f);
@@ -173,9 +177,12 @@ bool PlayScene::init()
 	{
 		return false;
 	}
+<<<<<<< HEAD
 
 	//タイマーの初期化
 	m_time = 0;
+=======
+>>>>>>> c4bb1e9942da4b6dcd596bc46c08eeaa7f956f5b
 
 	//物理システムの初期化
 	initPhysics();
@@ -236,6 +243,14 @@ bool PlayScene::init()
 	// イベントリスナー登録
 	this->getEventDispatcher()->addEventListenerWithSceneGraphPriority(listener, this);
 
+<<<<<<< HEAD
+=======
+	back_graund = AudioEngine::play2d("puzzle.ogg");
+	heart = AudioEngine::play2d("heart1.ogg");
+	AudioEngine::setLoop(back_graund, true);
+	AudioEngine::setLoop(heart, true);
+
+>>>>>>> c4bb1e9942da4b6dcd596bc46c08eeaa7f956f5b
 	return true;
 }
 
@@ -271,6 +286,7 @@ void PlayScene::update(float delta)
 			//物理ワールド中の剛体の角度を取得して、同じ角度にSpriteを回転
 			float rot = m_pBody->GetAngle();
 			sprite->setRotation(-CC_DEGREES_TO_RADIANS(rot));
+<<<<<<< HEAD
 
 
 			Rect rectPlayer = m_pPlayer->getBoundingBox();
@@ -284,8 +300,11 @@ void PlayScene::update(float delta)
 					sprite->removeFromParent();			//スプライト消去
 				}
 			}
+=======
+>>>>>>> c4bb1e9942da4b6dcd596bc46c08eeaa7f956f5b
 		}
 	}
+
 
 	//2秒ごとに食材が出現する
 	if (m_time % 120 == 0)
@@ -300,6 +319,7 @@ void PlayScene::update(float delta)
 	}
 
 	m_pPlayer->Update();
+<<<<<<< HEAD
 
 	//挟んでいたら、アニメーション
 	if (put)
@@ -311,6 +331,12 @@ void PlayScene::update(float delta)
 			cnt = 0;
 			put = false;
 		}
+=======
+	//挟んでいたら、アニメーション
+	if (put)
+	{
+		m_pPlayer->Put();
+>>>>>>> c4bb1e9942da4b6dcd596bc46c08eeaa7f956f5b
 	}
 }
 
@@ -331,8 +357,13 @@ bool PlayScene::onTouchBegan(Touch* touch, Event* unused_event)
 	Vec2 touch_pos = touch->getLocation();
 	Rect rect_player = m_pPlayer->getBoundingBox();
 
+<<<<<<< HEAD
 	//２回判定されないようにするための変数
 	static int move = 0;
+=======
+	////２回判定されないようにするための変数
+	//static int move = 0;
+>>>>>>> c4bb1e9942da4b6dcd596bc46c08eeaa7f956f5b
 
 	//当たり判定
 	bool hit = rect_player.containsPoint(touch_pos);
@@ -355,13 +386,22 @@ bool PlayScene::onTouchBegan(Touch* touch, Event* unused_event)
 			float rottation = m_pPlayer->Get_degree(m_pPlayer->getPosition(), touch_pos);
 			//プレイヤーを回転させる
 			m_pPlayer->setRotation(rottation);
+<<<<<<< HEAD
 			move++;
 		}
 		//２重に重なってしまっていたら
 		else
 		{
 			move = 0;
+=======
+			/*move++;*/
+>>>>>>> c4bb1e9942da4b6dcd596bc46c08eeaa7f956f5b
 		}
+		//２重に重なってしまっていたら
+		/*else
+		{
+			move = 0;
+		}*/
 	}
 
 	return true;
